@@ -8,11 +8,13 @@ spring:
       database: eureka-server
 
 eureka:
-  renewalPercentThreshold: 0.85
+  renewalPercentThreshold: 2
   instance:
     hostname: localhost
-  client.register-with-eureka: false
-  client.fetch-registry: false
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client.register-with-eureka: true
+  client.fetch-registry: true
   serviceUrl:
     defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
