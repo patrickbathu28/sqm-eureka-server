@@ -12,17 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.discovery.DiscoveryClient
 import org.springframework.web.bind.annotation.CrossOrigin
 
-@CrossOrigin(origins = arrayOf("*"))
+@CrossOrigin(origins = ["*"])
 @RestController
-class ServiceInstanceRestController {
-
-    @Autowired
-    private val discoveryClient: DiscoveryClient? = null
+class ServiceInstanceRestController ( val discoveryClient: DiscoveryClient? ){
 
     @RequestMapping("/service-instances/{applicationName}")
     fun serviceInstancesByApplicationName( @PathVariable applicationName: String? ): MutableList<ServiceInstance>? {
         if (discoveryClient != null) {
-            return discoveryClient.getInstances(applicationName)
+            return discoveryClient!!.getInstances(applicationName)
         }
         return null
     }
